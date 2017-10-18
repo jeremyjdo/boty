@@ -10,10 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171015084403) do
+ActiveRecord::Schema.define(version: 20171018084321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "facilities", force: :cascade do |t|
+    t.string   "name"
+    t.string   "type"
+    t.time     "openhour"
+    t.time     "closedhour"
+    t.text     "description"
+    t.boolean  "accesibility"
+    t.integer  "hotel_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["hotel_id"], name: "index_facilities_on_hotel_id", using: :btree
+  end
 
   create_table "hotels", force: :cascade do |t|
     t.string   "name"
@@ -42,4 +55,5 @@ ActiveRecord::Schema.define(version: 20171015084403) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "facilities", "hotels"
 end
